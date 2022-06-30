@@ -25,7 +25,7 @@ spec:
         app: code-server
     spec:
       containers:
-      - image: codercom/code-server
+      - image: 1981984/code-server:v3.7.10
         imagePullPolicy: IfNotPresent
         name: code-server
         ports:
