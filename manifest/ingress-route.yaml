@@ -2,7 +2,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: redirect-https
-  namespace: vscode
 spec:
   redirectScheme:
     scheme: https
@@ -11,7 +10,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: code-server
-  namespace: vscode
 spec:
   entryPoints:
   - web
@@ -29,7 +27,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: code-server-https
-  namespace: vscode
 spec:
   entryPoints:
   - websecure
