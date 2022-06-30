@@ -1,0 +1,46 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-https
+  namespace: code-server
+spec:
+  redirectScheme:
+    scheme: https
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: code-server
+  namespace: vscode
+spec:
+  entryPoints:
+  - web
+  routes:
+  - kind: Rule
+    match: Host(`vscode.app.okd4.guerbet-digital-solutions.com`)
+    middlewares:
+    - name: redirect-https
+    services:
+    - kind: Service
+      name: code-server
+      port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: code-server-https
+  namespace: vscode
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`vscode.app.okd4.guerbet-digital-solutions.com`)
+    services:
+    - kind: Service
+      name: code-server
+      port: 80
+  tls:
+    certResolver: ali
+    domains:
+    - main: '*.okd4.guerbet-digitalsolutions.com'
